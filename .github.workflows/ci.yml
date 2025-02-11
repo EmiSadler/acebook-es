@@ -18,6 +18,8 @@ jobs:
     env:
       MONGODB_URL: mongodb://localhost:27017/acebook_test
       PORT: 3030
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     steps:
       - name: Checkout repository
