@@ -14,12 +14,12 @@ DIR="/home/ec2-user/acebook-es"
 [ ! -d "$DIR" ] && echo "Creating ${DIR} directory" && mkdir -p "$DIR" || echo "${DIR} exists"
 
 # mongo missing, add mongo repo and install to ec2
-echo "[mongodb-org-5.0]
-name=MongoDB 5.0 Community
-baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/5.0/x86_64/
+echo "[mongodb-org-4.4]
+name=MongoDB 4.4 Community
+baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/4.4/x86_64/
 gpgcheck=1
-enabled=1" | sudo tee /etc/yum.repos.d/mongodb-org-5.0.repo
+enabled=1" | sudo tee /etc/yum.repos.d/mongodb-org-4.4.repo
 
 # import the mongodb public gpg key
-sudo rpm --import https://www.mongodb.org/static/pgp/server-5.0.asc
+sudo rpm --import https://www.mongodb.org/static/pgp/server-4.4.asc
 sudo yum install -y mongodb-org
