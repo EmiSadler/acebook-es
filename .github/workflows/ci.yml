@@ -61,8 +61,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Create application archive
-        run: tar --warning=no-file-changed -czvf acebook.tar.gz .
+      - name: Create application archive zip
+        run: zip -r acebook.zip .
 
       - name: Upload application archive to S3
-        run: aws s3 cp acebook.tar.gz s3://es-acebook-bucket
+        run: aws s3 cp acebook.zip s3://es-acebook-bucket
