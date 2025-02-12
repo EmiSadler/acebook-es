@@ -53,7 +53,7 @@ jobs:
         run: npm run test:integration
 
       - name: Create application archive
-        run: tar -czf acebook.tar.gz .
+        run: tar --warning=no-file-changed -czf acebook.tar.gz .
 
       - name: Upload application archive to S3
         run: aws s3 cp acebook.tar.gz s3://es-acebook-bucket
