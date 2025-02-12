@@ -56,10 +56,10 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: eu-west-2
-      S3_BUCKET: es-acebook-bucket
-      CODEDEPLOY_APPLICATION_NAME: es-acebook
-      CODEDEPLOY_DEPLOYMENT_GROUP: es-production
+      AWS_REGION: "eu-west-2"
+      S3_BUCKET: "es-acebook-bucket"
+      CODEDEPLOY_APPLICATION_NAME: "es-acebook"
+      CODEDEPLOY_DEPLOYMENT_GROUP: "es-production"
 
     steps:
       - name: Checkout repository
@@ -77,10 +77,17 @@ jobs:
       - name: Upload application archive to S3
         run: aws s3 cp acebook.zip s3://es-acebook-bucket
 
+      - name: Debug Environment Variables
+        run: |
+          echo "AWS_REGION=$AWS_REGION"
+          echo "S3_BUCKET=$S3_BUCKET"
+          echo "CODEDEPLOY_APP=$CODEDEPLOY_APPLICATION_NAME"
+          echo "CODEDEPLOY_GROUP=$CODEDEPLOY_DEPLOYMENT_GROUP"
+
       - name: Deploy Application with CodeDeploy
         run: |
           aws deploy create-deployment \
-            --application-name "$CODEDEPLOY_APP" \
-            --deployment-group-name "$CODEDEPLOY_GROUP" \
+            --application-name "$CODEDEPLOY_APPLICATION_NAME" \
+            --deployment-group-name "$CODEDEPLOY_DEPLOYMENT_GROUP" \
             --s3-location "bucket=$S3_BUCKET,key=acebook.zip,bundleType=zip" \
             --region "$AWS_REGION"
