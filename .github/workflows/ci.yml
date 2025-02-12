@@ -80,6 +80,7 @@ jobs:
       - name: Deploy Application with CodeDeploy
         run: |
           aws deploy create-deployment \
-            --application-name $CODEDEPLOY_APPLICATION_NAME \
-            --deployment-group-name $CODEDEPLOY_DEPLOYMENT_GROUP \
-            --s3-eu-west-2 bucket=$S3_BUCKET,key=acebook.zip,bundleType=zip
+            --application-name "$CODEDEPLOY_APP" \
+            --deployment-group-name "$CODEDEPLOY_GROUP" \
+            --s3-location "bucket=$S3_BUCKET,key=acebook.zip,bundleType=zip" \
+            --region "$AWS_REGION"
