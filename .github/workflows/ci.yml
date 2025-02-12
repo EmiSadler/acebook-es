@@ -56,13 +56,30 @@ jobs:
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: eu-west-2
+      S3_BUCKET: es-acebook-bucket
+      CODEDEPLOY_APPLICATION_NAME: es-acebook
+      CODEDEPLOY_DEPLOYMENT_GROUP: es-production
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip
+          pip3 install awscli --upgrade --user
 
       - name: Create application archive zip
         run: zip -r acebook.zip .
 
       - name: Upload application archive to S3
         run: aws s3 cp acebook.zip s3://es-acebook-bucket
+
+      - name: Deploy Application with CodeDeploy
+        run: |
+          aws deploy create-deployment \
+            --application-name $CODEDEPLOY_APPLICATION_NAME \
+            --deployment-group-name $CODEDEPLOY_DEPLOYMENT_GROUP \
+            --s3-location bucket=$S3_BUCKET,key=acebook.zip,bundleType=zip
