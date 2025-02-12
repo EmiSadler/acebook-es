@@ -52,5 +52,8 @@ jobs:
       - name: Run integration tests
         run: npm run test:integration
 
-      - name: Upload to S3
-        run: aws s3 cp . s3://es-acebook-bucket  --recursive
+      - name: Create application archive
+        run: tar -czf acebook.tar.gz .
+
+      - name: Upload application archive to S3
+        run: aws s3 cp acebook.tar.gz s3://es-acebook-bucket
