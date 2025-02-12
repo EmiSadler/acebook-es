@@ -82,4 +82,4 @@ jobs:
           aws deploy create-deployment \
             --application-name $CODEDEPLOY_APPLICATION_NAME \
             --deployment-group-name $CODEDEPLOY_DEPLOYMENT_GROUP \
-            --s3-location bucket=$S3_BUCKET,key=acebook.zip,bundleType=zip
+            --s3-eu-west-2 bucket=$S3_BUCKET,key=acebook.zip,bundleType=zip
