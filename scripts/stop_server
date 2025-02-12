@@ -1,6 +1,15 @@
 #!/bin/bash
-isExistApp = `pgrep httpd`
-if [[ -n  $isExistApp ]]; then
-    service httpd stop        
-fi
+# Stopping existing node servers
+echo "Stopping any existing node servers..."
 
+# Check if any Node.js process is running
+if ps aux | grep -v grep | grep node > /dev/null; then
+    pkill node
+    if [ $? -eq 0 ]; then
+        echo "Node.js processes stopped successfully."
+    else
+        echo "Error: Failed to stop Node.js servers"
+    fi
+else
+    echo "No Node.js processes found to stop."
+fi

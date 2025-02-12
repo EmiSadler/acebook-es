@@ -1,3 +1,25 @@
 #!/bin/bash
-yum install -y httpd
+# Install nvm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
+source ~/.nvm/nvm.sh
 
+# install a specific compatible version of Node.js (compatible with ec2 isntance)
+nvm install 18  # fix version - chang eif needed
+
+# rm the prefix option to avoid npm conflicts
+nvm use --delete-prefix v18
+
+# create working directory if it doesn't exist
+DIR="/home/ec2-user/acebook-es"
+[ ! -d "$DIR" ] && echo "Creating ${DIR} directory" && mkdir -p "$DIR" || echo "${DIR} exists"
+
+# mongo missing, add mongo repo and install to ec2
+echo "[mongodb-org-5.0]
+name=MongoDB 5.0 Community
+baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/5.0/x86_64/
+gpgcheck=1
+enabled=1" | sudo tee /etc/yum.repos.d/mongodb-org-5.0.repo
+
+# import the mongodb public gpg key
+sudo rpm --import https://www.mongodb.org/static/pgp/server-5.0.asc
+sudo yum install -y mongodb-org
