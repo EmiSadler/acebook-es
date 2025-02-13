@@ -25,7 +25,7 @@ sudo yum install -y openssl openssl11
 
 # Add MongoDB 6.0 repository (Compatible with AL2023)
 echo "[mongodb-org-5.0]
-name=MongoDB Repository
+name=MongoDB 5.0 Community
 baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/5.0/x86_64/
 gpgcheck=1
 enabled=1" | sudo tee /etc/yum.repos.d/mongodb-org-5.0.repo
