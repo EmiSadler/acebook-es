@@ -1,73 +1,50 @@
-# #!/bin/bash
-# set -e  # Exit immediately if a command exits with a non-zero status
-
-# # Install nvm
-# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
-# export NVM_DIR="$HOME/.nvm"
-# source "$NVM_DIR/nvm.sh"
-
-# # Install Node.js (Amazon Linux 2023 uses dnf, no amazon-linux-extras)
-# nvm install 18
-# nvm use 18
-
-# # Remove the prefix option to avoid npm conflicts
-# nvm use --delete-prefix v18 || true
-
-# # Create working directory if it doesn't exist
-# DIR="/home/ec2-user/acebook-es"
-# [ ! -d "$DIR" ] && echo "Creating ${DIR} directory" && mkdir -p "$DIR" || echo "${DIR} exists"
-
-# # Install EPEL repository (No amazon-linux-extras in AL2023)
-# sudo amazon-linux-extras enable epel
-# sudo yum install -y epel-release
-
-# # Install OpenSSL compatibility package (Amazon Linux 2023 no longer has compat-openssl10)
-# sudo yum install -y openssl
-
-# # Remove any previous MongoDB repository file
-# sudo rm -f /etc/yum.repos.d/mongodb-org-*.repo
-
-# # Add MongoDB 6.0 repository (Compatible with AL2023)
-# echo "[mongodb-org-6.0]
-# name=MongoDB Repository
-# baseurl=https://repo.mongodb.org/yum/amazon/2023/mongodb-org/6.0/x86_64/
-# gpgcheck=1
-# enabled=1
-# gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc" | sudo tee /etc/yum.repos.d/mongodb-org-6.0.repo
-
-# # Import the MongoDB public GPG key
-# sudo rpm --import https://www.mongodb.org/static/pgp/server-6.0.asc
-
-# # Install MongoDB
-# sudo yum install -y mongodb-org --setopt=install_weak_deps=False --skip-broken
-
-# # Start and enable MongoDB service
-# sudo systemctl enable --now mongod
-
-# # Check MongoDB status
-# sudo systemctl status mongod --no-pager
 #!/bin/bash
+set -e  # Exit immediately if a command exits with a non-zero status
+
 # Install nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
-source ~/.nvm/nvm.sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+source "$NVM_DIR/nvm.sh"
 
-# install a specific compatible version of Node.js (compatible with ec2 isntance)
-nvm install 18  # fix version - chang eif needed
+# Install Node.js (Amazon Linux 2023 uses dnf, no amazon-linux-extras)
+nvm install 18
+nvm use 18
 
-# rm the prefix option to avoid npm conflicts
-nvm use --delete-prefix v18
+# Remove the prefix option to avoid npm conflicts
+nvm use --delete-prefix v18 || true
 
-# create working directory if it doesn't exist
-DIR="/home/ec2-user/acebook"
+# Create working directory if it doesn't exist
+DIR="/home/ec2-user/acebook-es"
 [ ! -d "$DIR" ] && echo "Creating ${DIR} directory" && mkdir -p "$DIR" || echo "${DIR} exists"
 
-# mongo missing, add mongo repo and install to ec2
-echo "[mongodb-org-6.0]
-name=MongoDB 6.0 Community
-baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/6.0/x86_64/
-gpgcheck=1
-enabled=1" | sudo tee /etc/yum.repos.d/mongodb-org-6.0.repo
+# Install EPEL repository (No amazon-linux-extras in AL2023)
+sudo amazon-linux-extras enable epel
+sudo yum install -y epel-release
 
-# import the mongodb public gpg key
+# Install OpenSSL compatibility package (Amazon Linux 2023 no longer has compat-openssl10)
+sudo yum install -y openssl
+
+# Remove any previous MongoDB repository file
+sudo rm -f /etc/yum.repos.d/mongodb-org-*.repo
+
+# Add MongoDB 6.0 repository (Compatible with AL2023)
+echo "[mongodb-org-6.0]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/amazon/2023/mongodb-org/6.0/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc" | sudo tee /etc/yum.repos.d/mongodb-org-6.0.repo
+
+# Import the MongoDB public GPG key
 sudo rpm --import https://www.mongodb.org/static/pgp/server-6.0.asc
-sudo yum install -y mongodb-org
+
+# Install MongoDB
+sudo yum install -y mongodb-org --setopt=install_weak_deps=False --skip-broken
+
+# Start and enable MongoDB service
+sudo systemctl enable --now mongod
+
+# Check MongoDB status
+sudo systemctl status mongod --no-pager
+!/bin/bash
+Install nvm
