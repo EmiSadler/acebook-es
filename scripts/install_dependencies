@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e  # Exit immediately if a command exits with a non-zero status
+# set -e  # Exit immediately if a command exits with a non-zero status
 
 # Install nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
@@ -20,25 +20,26 @@ DIR="/home/ec2-user/acebook-es"
 # Install OpenSSL compatibility package (Amazon Linux 2023 no longer has compat-openssl10)
 sudo yum install -y openssl
 
-# Remove any previous MongoDB repository file
-sudo rm -f /etc/yum.repos.d/mongodb-org-*.repo
+# # Remove any previous MongoDB repository file
+# sudo rm -f /etc/yum.repos.d/mongodb-org-*.repo
 
 # Add MongoDB 6.0 repository (Compatible with AL2023)
 echo "[mongodb-org-5.0]
 name=MongoDB Repository
 baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/5.0/x86_64/
 gpgcheck=1
-enabled=1
-gpgkey=https://www.mongodb.org/static/pgp/server-5.0.asc" | sudo tee /etc/yum.repos.d/mongodb-org-5.0.repo
+enabled=1" | sudo tee /etc/yum.repos.d/mongodb-org-5.0.repo
 
+# import key
+sudo rpm --import https://www.mongodb.org/static/pgp/server-5.0.asc
 
 # Install MongoDB
-sudo yum install -y mongodb-org --setopt=install_weak_deps=False --skip-broken
+sudo yum install -y mongodb-org
 
-# Start and enable MongoDB service
-sudo systemctl enable --now mongod
+# # Start and enable MongoDB service
+# sudo systemctl enable --now mongod
 
 # Check MongoDB status
 sudo systemctl status mongod --no-pager
-!/bin/bash
-Install nvm
+# !/bin/bash
+# Install nvm
