@@ -18,28 +18,19 @@ nvm use --delete-prefix v18 || true
 DIR="/home/ec2-user/acebook-es"
 [ ! -d "$DIR" ] && echo "Creating ${DIR} directory" && mkdir -p "$DIR" || echo "${DIR} exists"
 
-sudo yum install -y openssl openssl11
+# sudo yum install -y openssl openssl11
 
-# # Remove any previous MongoDB repository file
-# sudo rm -f /etc/yum.repos.d/mongodb-org-*.repo
 
-# Add MongoDB 6.0 repository (Compatible with AL2023)
-echo "[mongodb-org-5.0]
-name=MongoDB 5.0 Community
-baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/5.0/x86_64/
-gpgcheck=1
-enabled=1" | sudo tee /etc/yum.repos.d/mongodb-org-5.0.repo
+# echo "[mongodb-org-5.0]
+# name=MongoDB 5.0 Community
+# baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/5.0/x86_64/
+# gpgcheck=1
+# enabled=1" | sudo tee /etc/yum.repos.d/mongodb-org-5.0.repo
 
-# import key
-sudo rpm --import https://www.mongodb.org/static/pgp/server-5.0.asc
 
-# Install MongoDB
-sudo yum install -y mongodb-org
+# sudo rpm --import https://www.mongodb.org/static/pgp/server-5.0.asc
 
-# # Start and enable MongoDB service
-# sudo systemctl enable --now mongod
+# sudo yum install -y mongodb-org
 
-# Check MongoDB status
-sudo systemctl status mongod --no-pager
-# !/bin/bash
-# Install nvm
+
+# sudo systemctl status mongod --no-pager
