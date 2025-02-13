@@ -14,7 +14,7 @@ nvm use 18
 nvm use --delete-prefix v18 || true
 
 # Create working directory if it doesn't exist
-DIR="/home/root/acebook-es"
+DIR="/home/ec2-user/acebook-es"
 [ ! -d "$DIR" ] && echo "Creating ${DIR} directory" && mkdir -p "$DIR" || echo "${DIR} exists"
 
 # Install EPEL repository (No amazon-linux-extras in AL2023)
