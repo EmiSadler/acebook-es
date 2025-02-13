@@ -2,46 +2,46 @@
 set -e  # Exit immediately if a command exits with a non-zero status
 
 # Install nvm
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
-source ~/.nvm/nvm.sh
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.4/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+source "$NVM_DIR/nvm.sh"
 
-# Install a specific compatible version of Node.js (compatible with EC2 instance)
-nvm install 18  # Fix version - change if needed
+# Install Node.js (Amazon Linux 2023 uses dnf, no amazon-linux-extras)
+nvm install 18
+nvm use 18
 
 # Remove the prefix option to avoid npm conflicts
-nvm use --delete-prefix v18
+nvm use --delete-prefix v18 || true
 
 # Create working directory if it doesn't exist
 DIR="/home/ec2-user/acebook-es"
 [ ! -d "$DIR" ] && echo "Creating ${DIR} directory" && mkdir -p "$DIR" || echo "${DIR} exists"
 
-# Enable Amazon Linux Extras and install EPEL
-sudo amazon-linux-extras enable epel
-sudo yum install -y epel-release
+# Install EPEL repository (No amazon-linux-extras in AL2023)
+sudo dnf install -y epel-release
 
-# Install OpenSSL compatibility package (for missing dependencies)
-sudo yum install -y compat-openssl10
+# Install OpenSSL compatibility package (Amazon Linux 2023 no longer has compat-openssl10)
+sudo dnf install -y openssl
 
 # Remove any previous MongoDB repository file
 sudo rm -f /etc/yum.repos.d/mongodb-org-*.repo
 
-# Add MongoDB 4.4 repository (recommended for Amazon Linux 2)
-echo "[mongodb-org-5.0]
+# Add MongoDB 6.0 repository (Compatible with AL2023)
+echo "[mongodb-org-6.0]
 name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/5.0/x86_64/
+baseurl=https://repo.mongodb.org/yum/amazon/2023/mongodb-org/6.0/x86_64/
 gpgcheck=1
 enabled=1
-gpgkey=https://www.mongodb.org/static/pgp/server-5.0.asc" | sudo tee /etc/yum.repos.d/mongodb-org-5.0.repo
+gpgkey=https://www.mongodb.org/static/pgp/server-6.0.asc" | sudo tee /etc/yum.repos.d/mongodb-org-6.0.repo
 
 # Import the MongoDB public GPG key
-sudo rpm --import https://www.mongodb.org/static/pgp/server-5.0.asc
+sudo rpm --import https://www.mongodb.org/static/pgp/server-6.0.asc
 
 # Install MongoDB
-sudo yum install -y mongodb-org --skip-broken
+sudo dnf install -y mongodb-org --setopt=install_weak_deps=False --skip-broken
 
 # Start and enable MongoDB service
-sudo systemctl start mongod
-sudo systemctl enable mongod
+sudo systemctl enable --now mongod
 
 # Check MongoDB status
 sudo systemctl status mongod --no-pager
