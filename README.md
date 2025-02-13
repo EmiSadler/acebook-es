@@ -1,5 +1,6 @@
 # Acebook
 
+GR.
 This is a Node.js template for the Acebook engineering project.
 
 It uses:
@@ -46,7 +47,7 @@ REPLACE THIS TEXT WITH A LINK TO YOUR CARD WALL
    brew tap mongodb/brew
    brew install mongodb-community@5.0
    ```
-   *Note:* If you see a message that says `If you need to have mongodb-community@5.0 first in your PATH, run:`, follow the instruction. Restart your terminal after this.
+   _Note:_ If you see a message that says `If you need to have mongodb-community@5.0 first in your PATH, run:`, follow the instruction. Restart your terminal after this.
 7. Start MongoDB
    ```
    brew services start mongodb-community@5.0
