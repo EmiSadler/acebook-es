@@ -14,12 +14,11 @@ nvm use 18
 nvm use --delete-prefix v18 || true
 
 # Create working directory if it doesn't exist
-DIR="/home/ec2-user/acebook-es"
+DIR="/home/root/acebook-es"
 [ ! -d "$DIR" ] && echo "Creating ${DIR} directory" && mkdir -p "$DIR" || echo "${DIR} exists"
 
 # Install EPEL repository (No amazon-linux-extras in AL2023)
-sudo dnf config-manager --set-enabled crb
-sudo dnf install -y epel-next-release
+sudo dnf install -y epel-release
 
 # Install OpenSSL compatibility package (Amazon Linux 2023 no longer has compat-openssl10)
 sudo dnf install -y openssl
