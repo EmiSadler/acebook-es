@@ -18,7 +18,8 @@ DIR="/home/ec2-user/acebook-es"
 [ ! -d "$DIR" ] && echo "Creating ${DIR} directory" && mkdir -p "$DIR" || echo "${DIR} exists"
 
 # Install EPEL repository (No amazon-linux-extras in AL2023)
-sudo dnf install -y epel-release
+sudo dnf config-manager --set-enabled crb
+sudo dnf install -y epel-next-release
 
 # Install OpenSSL compatibility package (Amazon Linux 2023 no longer has compat-openssl10)
 sudo dnf install -y openssl
