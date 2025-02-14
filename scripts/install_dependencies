@@ -1,5 +1,7 @@
 # !/bin/bash
 # Install nvm
+
+set -x  # Print commands and their arguments
 # set -e  # Exit immediately if a command exits with a non-zero status
 
 # Install nvm
@@ -20,8 +22,6 @@ DIR="/home/ec2-user/acebook-es"
 
 which mongod
 if [ $? -eq 1 ]; then
-    echo "MongoDB already installed."
-
     sudo yum install -y openssl openssl11
 
     echo "[mongodb-org-8.0]
