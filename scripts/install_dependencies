@@ -22,7 +22,7 @@ DIR="/home/ec2-user/acebook-es"
 
 which mongod || MONGODB=$?
 if [ $MONGODB -eq 1 ]; then
-    sudo yum install -y openssl openssl11
+    sudo yum install -y openssl
 
     source /etc/os-release
 
