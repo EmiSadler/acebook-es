@@ -8,8 +8,8 @@ export NVM_DIR="$HOME/.nvm"
 source "$NVM_DIR/nvm.sh"
 
 # Install Node.js (Amazon Linux 2023 uses dnf, no amazon-linux-extras)
-nvm install 18
-nvm use 18
+nvm install 16
+nvm use 16
 
 # Remove the prefix option to avoid npm conflicts
 nvm use --delete-prefix v18 || true
@@ -18,19 +18,21 @@ nvm use --delete-prefix v18 || true
 DIR="/home/ec2-user/acebook-es"
 [ ! -d "$DIR" ] && echo "Creating ${DIR} directory" && mkdir -p "$DIR" || echo "${DIR} exists"
 
-# sudo yum install -y openssl openssl11
+which mongod
+if [ $? -eq 1 ]; then
+    echo "MongoDB already installed."
 
+    sudo yum install -y openssl openssl11
 
-# echo "[mongodb-org-5.0]
-# name=MongoDB 5.0 Community
-# baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/5.0/x86_64/
-# gpgcheck=1
-# enabled=1" | sudo tee /etc/yum.repos.d/mongodb-org-5.0.repo
+    echo "[mongodb-org-8.0]
+    name=MongoDB 8.0 Community
+    baseurl=https://repo.mongodb.org/yum/amazon/2/mongodb-org/8.0/x86_64/
+    gpgcheck=1
+    enabled=1
+    gpgkey=https://pgp.mongodb.com/server-8.0.asc" | sudo tee /etc/yum.repos.d/mongodb-org-8.0.repo
 
-
-# sudo rpm --import https://www.mongodb.org/static/pgp/server-5.0.asc
-
-# sudo yum install -y mongodb-org
-
-
-# sudo systemctl status mongod --no-pager
+    sudo yum install -y mongodb-org
+    sudo systemctl daemon-reload
+    sudo systemctl start mongod
+    sudo systemctl status mongod --no-pager
+fi
