@@ -10,8 +10,8 @@ export NVM_DIR="$HOME/.nvm"
 source "$NVM_DIR/nvm.sh"
 
 # Install Node.js (Amazon Linux 2023 uses dnf, no amazon-linux-extras)
-nvm install 16
-nvm use 16
+nvm install 18
+nvm use 18
 
 # Remove the prefix option to avoid npm conflicts
 nvm use --delete-prefix v18 || true
