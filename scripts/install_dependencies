@@ -20,8 +20,8 @@ nvm use --delete-prefix v18 || true
 DIR="/home/ec2-user/acebook-es"
 [ ! -d "$DIR" ] && echo "Creating ${DIR} directory" && mkdir -p "$DIR" || echo "${DIR} exists"
 
-which mongod
-if [ $? -eq 1 ]; then
+which mongod || MONGODB=$?
+if [ $MONGODB -eq 1 ]; then
     sudo yum install -y openssl openssl11
 
     source /etc/os-release
